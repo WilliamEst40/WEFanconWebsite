@@ -1,0 +1,46 @@
+body {
+  font-family: sans-serif;
+  max-width: 600px;
+  margin: 2em auto;
+}
+.question {
+  font-size: 1.3em;
+  margin-bottom: 1em;
+}
+.answers {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1em;
+}
+.answers button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0.5em 0;
+  width: 46%;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background: #f9f9f9;
+  cursor: pointer;
+  padding: 0.6em;
+  transition: box-shadow 0.2s;
+  min-height: 80px;
+}
+.answers button:hover {
+  box-shadow: 0 0 8px #b3d4fc;
+}
+.answers img {
+  height: 60px;
+  margin-bottom: 0.4em;
+  border-radius: 6px;
+}
+#result {
+  font-size: 1.4em;
+  margin-top: 2em;
+}
+#result .team-header img {
+  height: 80px;
+  margin: 1em 1em 0 0;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
