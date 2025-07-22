@@ -248,3 +248,28 @@ function renderTieBreaker(prevScores) {
   submitBtn.className = "submit-quiz-btn";
   container.appendChild(submitBtn);
 }
+
+function showResult(scores) {
+  document.getElementById('question-container').style.display = 'none';
+  const resultDiv = document.getElementById('result');
+  resultDiv.style.display = '';
+  let winner = scores.R > scores.S ? "R" : "S";
+  let imagesHTML = teamImages[winner]
+    .map(src => `<img src="${src}" alt="Team ${winner} profile header" style="height:80px;margin:1em 1em 0 0;border-radius:8px;border:1px solid #ccc;">`)
+    .join('');
+  resultDiv.innerHTML = `
+    <div>You belong to <b>Team ${winner}</b>!</div>
+    <p>${teamDescriptions[winner]}</p>
+    <div class="team-header">
+      <b>Your Team Header:</b><br>
+      ${imagesHTML}
+      <div style="font-size:.95em;margin-top:.5em;">(Right-click and save to use on X as profile header!)</div>
+    </div>
+  `;
+}
+
+window.onload = function() {
+  document.getElementById('result').style.display = 'none';
+  document.getElementById('question-container').style.display = '';
+  renderQuiz();
+};
