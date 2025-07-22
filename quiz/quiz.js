@@ -115,94 +115,136 @@ const tieBreaker = {
   ]
 };
 
-let current = 0;
-let scores = { R: 0, S: 0 };
-let isTieBreaker = false;
+function renderQuiz() {
+  const container = document.getElementById('question-container');
+  container.innerHTML = "";
+  quizQuestions.forEach((q, qi) => {
+    const qDiv = document.createElement('div');
+    qDiv.className = "quiz-question-block";
+    const qTitle = document.createElement('div');
+    qTitle.className = "question";
+    qTitle.textContent = q.question;
+    qDiv.appendChild(qTitle);
 
-function showQuestion() {
-  if (current >= quizQuestions.length) 
-    {
-      // Check for tie
-      if (scores.R === scores.S && !isTieBreaker) {
-        isTieBreaker = true;
-        showTieBreaker();
-        return;
-      } else {
-      showResult();
+    const ansDiv = document.createElement('div');
+    ansDiv.className = "answers";
+    q.answers.forEach((ans, ai) => {
+      const label = document.createElement('label');
+      label.style.display = "inline-block";
+      label.style.margin = "0.5em";
+      const radio = document.createElement('input');
+      radio.type = "radio";
+      radio.name = `q${qi}`;
+      radio.value = ai;
+      label.appendChild(radio);
+      if (ans.img) {
+        const img = document.createElement('img');
+        img.src = ans.img;
+        img.alt = ans.text || "Answer image";
+        img.style.height = "60px";
+        img.style.borderRadius = "6px";
+        img.style.display = "block";
+        label.appendChild(img);
+      }
+      if (ans.text) {
+        const span = document.createElement('span');
+        span.textContent = ans.text;
+        label.appendChild(span);
+      }
+      ansDiv.appendChild(label);
+    });
+    qDiv.appendChild(ansDiv);
+    container.appendChild(qDiv);
+  });
+
+  // Add Submit button
+  const submitBtn = document.createElement('button');
+  submitBtn.textContent = "Submit Quiz";
+  submitBtn.onclick = handleSubmit;
+  submitBtn.className = "submit-quiz-btn";
+  container.appendChild(submitBtn);
+}
+
+function handleSubmit() {
+  // Tally scores
+  let scores = { R: 0, S: 0 };
+  let allAnswered = true;
+  quizQuestions.forEach((q, qi) => {
+    const selected = document.querySelector(`input[name="q${qi}"]:checked`);
+    if (!selected) {
+      allAnswered = false;
       return;
     }
+    const ans = q.answers[Number(selected.value)];
+    scores[ans.team]++;
+  });
+
+  if (!allAnswered) {
+    alert("Please answer all questions before submitting!");
+    return;
   }
 
-  const q = quizQuestions[current];
-  document.getElementById('question').textContent = q.question;
-  const answersDiv = document.getElementById('answers');
-  answersDiv.innerHTML = '';
-  q.answers.forEach((ans) => {
-    const btn = document.createElement('button');
-    btn.onclick = () => {
-      scores[ans.team]++;
-      current++;
-      showQuestion();
-    };
+  if (scores.R === scores.S) {
+    // Show tiebreaker
+    renderTieBreaker(scores);
+    return;
+  }
+  showResult(scores);
+}
+
+function renderTieBreaker(prevScores) {
+  const container = document.getElementById('question-container');
+  container.innerHTML = "";
+  const qDiv = document.createElement('div');
+  qDiv.className = "quiz-question-block";
+  const qTitle = document.createElement('div');
+  qTitle.className = "question";
+  qTitle.textContent = tieBreaker.question;
+  qDiv.appendChild(qTitle);
+
+  const ansDiv = document.createElement('div');
+  ansDiv.className = "answers";
+  tieBreaker.answers.forEach((ans, ai) => {
+    const label = document.createElement('label');
+    label.style.display = "inline-block";
+    label.style.margin = "0.5em";
+    const radio = document.createElement('input');
+    radio.type = "radio";
+    radio.name = "tiebreaker";
+    radio.value = ai;
+    label.appendChild(radio);
     if (ans.img) {
       const img = document.createElement('img');
       img.src = ans.img;
-      img.alt = ans.text || "Answer choice";
-      btn.appendChild(img);
+      img.alt = ans.text || "Answer image";
+      img.style.height = "60px";
+      img.style.borderRadius = "6px";
+      img.style.display = "block";
+      label.appendChild(img);
     }
     if (ans.text) {
       const span = document.createElement('span');
       span.textContent = ans.text;
-      btn.appendChild(span);
+      label.appendChild(span);
     }
-    answersDiv.appendChild(btn);
+    ansDiv.appendChild(label);
   });
-}
+  qDiv.appendChild(ansDiv);
+  container.appendChild(qDiv);
 
-function showTieBreaker() {
-  document.getElementById('question').textContent = tieBreaker.question;
-  const answersDiv = document.getElementById('answers');
-  answersDiv.innerHTML = '';
-  tieBreaker.answers.forEach((ans) => {
-    const btn = document.createElement('button');
-    btn.onclick = () => {
-      // Only add one point to the selected team for tiebreaker
-      scores[ans.team]++;
-      showResult();
-    };
-    if (ans.img) {
-      const img = document.createElement('img');
-      img.src = ans.img;
-      img.alt = ans.text || "Answer choice";
-      btn.appendChild(img);
+  // Add Submit button
+  const submitBtn = document.createElement('button');
+  submitBtn.textContent = "Submit Tiebreaker";
+  submitBtn.onclick = function() {
+    const selected = document.querySelector(`input[name="tiebreaker"]:checked`);
+    if (!selected) {
+      alert("Please select a tiebreaker answer!");
+      return;
     }
-    if (ans.text) {
-      const span = document.createElement('span');
-      span.textContent = ans.text;
-      btn.appendChild(span);
-    }
-    answersDiv.appendChild(btn);
-  });
+    const ans = tieBreaker.answers[Number(selected.value)];
+    prevScores[ans.team]++;
+    showResult(prevScores);
+  };
+  submitBtn.className = "submit-quiz-btn";
+  container.appendChild(submitBtn);
 }
-
-function showResult() {
-  document.getElementById('question-container').style.display = 'none';
-  const resultDiv = document.getElementById('result');
-  // In rare case of another tie, default to Team R
-  let winner = scores.R > scores.S ? "Red Thread" : "Songkran";
-  let imagesHTML = teamImages[winner]
-    .map(src => `<img src="${src}" alt="Team ${winner} Profile Header">`)
-    .join('');
-  resultDiv.innerHTML = `
-    <div>You belong to <b>Team ${winner}</b>!</div>
-    <p>${teamDescriptions[winner]}</p>
-    <div class="team-header">
-      <b>Your Team Profile Header:</b><br>
-      ${imagesHTML}
-      <div style="font-size:.95em;margin-top:.5em;">(Right-click and save to use on X as your profile header!)</div>
-    </div>
-  `;
-  resultDiv.style.display = '';
-}
-
-showQuestion();
