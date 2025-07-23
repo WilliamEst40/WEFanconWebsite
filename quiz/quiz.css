@@ -2,10 +2,16 @@ body {
   font-family: 'Fredoka', Arial, sans-serif;
   max-width: 600px;
   margin: 2em auto;
+  padding: 0 20px;  /* Add padding for mobile */
+  box-sizing: border-box;
   
   /* Gradient background */
-  background: linear-gradient(135deg, #eb9bb0 0%, #75a1e7 100%);
+  background-color: #ffd4e0; /* Lighter fallback color */
+  background-image: linear-gradient(135deg, #ffb5c9 0%, #9ec3ff 100%);
+  background-attachment: fixed; /* Keep gradient fixed while scrolling */
   min-height: 100vh;
+  position: relative;  /* For proper stacking context */
+  overflow-x: hidden;  /* Prevent horizontal scroll */
 }
 .top-right-icon {
   position: fixed;
@@ -24,10 +30,18 @@ body {
 }
 @media (max-width: 600px) {
   .top-right-icon {
-    width: 32px;
-    height: 32px;
-    top: 12px;
-    right: 12px;
+    width: 40px;
+    height: 40px;
+    top: 8px;
+    right: 8px;
+  }
+  
+  .quiz-intro {
+    padding-top: 70px; /* Increase padding on mobile */
+  }
+  
+  .quiz-intro h2 {
+    font-size: 2em; /* Smaller font size on mobile */
   }
 }
 .top-left-icon {
@@ -47,17 +61,17 @@ body {
 }
 @media (max-width: 600px) {
   .top-left-icon {
-    width: 32px;
-    height: 32px;
-    top: 12px;
-    left: 12px;
+    width: 40px;
+    height: 40px;
+    top: 8px;
+    left: 8px;
   }
 }
 .side-image {
   position: fixed;
   top: 50%;
   transform: translateY(-50%);
-  z-index: 50;
+  z-index: -1;  /* Place behind content */
   opacity: 0.88;
   pointer-events: none; /* So the images don't block clicks */
   max-height: 60vh;
@@ -79,26 +93,42 @@ body {
     display: none; /* Hide on small screens */
   }
 }
+
+@media (max-width: 768px) {
+  body {
+    max-width: 100%;
+    padding: 0 15px;
+  }
+  
+  .quiz-intro {
+    padding: 0 15px;
+  }
+}
 .quiz-intro {
   width: 100vw;
   margin-left: calc(50% - 50vw);
   margin-right: calc(50% - 50vw);
   margin-bottom: 2.5em;
-  text-align: center; /* Left-align text */
+  padding-top: 60px; /* Add space for the icons */
+  text-align: center;
   box-sizing: border-box;
 }
 .quiz-intro h2 {
   font-family: 'Winky Rough', sans-serif;
   font-size: 3em;
-  color: #c066e0;
+  color: #ffffff;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
   margin-bottom: 0.5em;
   text-align: center;
+  word-wrap: break-word; /* Ensure text wraps on small screens */
 }
 .quiz-intro p {
   font-family: 'Winky Rough', sans-serif;
-  color: #555;
+  color: #000000;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
   font-size: 1.5em;
   margin: 0;
+  font-weight: 500;
 }
 .quiz-question-block {
   background: #fff;
