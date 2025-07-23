@@ -30,6 +30,29 @@ body {
     right: 12px;
   }
 }
+.top-left-icon {
+  position: fixed;
+  top: 24px;
+  left: 28px;
+  width: 130px;          /* Adjust size as needed */
+  height: 130px;
+  z-index: 999;
+  opacity: 0.92;
+  transition: transform 0.12s;
+  cursor: pointer;
+}
+.top-left-icon:hover {
+  transform: scale(1.08) rotate(7deg);
+  opacity: 1;
+}
+@media (max-width: 600px) {
+  .top-left-icon {
+    width: 32px;
+    height: 32px;
+    top: 12px;
+    left: 12px;
+  }
+}
 .side-image {
   position: fixed;
   top: 50%;
