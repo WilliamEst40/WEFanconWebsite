@@ -1,16 +1,149 @@
 body {
-  font-family: sans-serif;
+  font-family: 'Fredoka', Arial, sans-serif;
   max-width: 600px;
   margin: 2em auto;
+  
+  /* Gradient background */
+  background: linear-gradient(135deg, #ffe5ec 0%, #e0ecff 100%);
+  min-height: 100vh;
 }
+.top-right-icon {
+  position: fixed;
+  top: 24px;
+  right: 28px;
+  width: 120px;          /* Adjust size as needed */
+  height: 120px;
+  z-index: 999;
+  opacity: 0.92;
+  transition: transform 0.12s;
+  cursor: pointer;
+}
+.top-right-icon:hover {
+  transform: scale(1.08) rotate(7deg);
+  opacity: 1;
+}
+@media (max-width: 600px) {
+  .top-right-icon {
+    width: 32px;
+    height: 32px;
+    top: 12px;
+    right: 12px;
+  }
+}
+.side-image {
+  position: fixed;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 50;
+  opacity: 0.88;
+  pointer-events: none; /* So the images don't block clicks */
+  max-height: 60vh;
+  width: auto;
+}
+
+.left-side-image {
+  left: 0;
+  margin-left: 10px;    /* Adjust spacing from the edge */
+}
+
+.right-side-image {
+  right: 0;
+  margin-right: 10px;   /* Adjust spacing from the edge */
+}
+
+@media (max-width: 900px) {
+  .side-image {
+    display: none; /* Hide on small screens */
+  }
+}
+.quiz-intro {
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+  margin-bottom: 2.5em;
+  text-align: center; /* Left-align text */
+  box-sizing: border-box;
+}
+.quiz-intro h2 {
+  font-family: 'Winky Rough', sans-serif;
+  font-size: 3em;
+  color: #c066e0;
+  margin-bottom: 0.5em;
+  text-align: center;
+}
+.quiz-intro p {
+  font-family: 'Winky Rough', sans-serif;
+  color: #555;
+  font-size: 1.5em;
+  margin: 0;
+}
+.quiz-question-block {
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 4px 18px #d0d0fa55;
+  padding: 1.5em 1.2em 1.2em 1.2em;
+  margin-bottom: 2.5em;
+  transition: box-shadow 0.22s, transform 0.18s;
+}
+.quiz-question-block:hover {
+  box-shadow: 0 8px 28px #b3d4fc99;
+  transform: translateY(-3px) scale(1.01);
+}
+
 .question {
-  font-size: 1.3em;
+ font-family: 'Lobster', cursive;
+  font-size: 1.5em;
   margin-bottom: 1em;
+  color: #8b1fa9;
+  text-shadow: 0 2px 8px #ffe5ecaa;
 }
 .answers {
+  display: block;
+  margin: 0.5em 0;
+}
+.answers label {
   display: flex;
-  flex-wrap: wrap;
-  gap: 1em;
+  align-items: center;
+  margin: 0.5em 0;
+  background: rgba(255,255,255,0.7);
+  border-radius: 8px;
+  padding: 0.5em 0.7em;
+  transition: background 0.2s, box-shadow 0.2s, transform 0.15s;
+  cursor: pointer;
+  font-size: 1.13em;
+  gap: 0.8em;
+  border: 2px solid transparent;
+}
+
+.answers input[type="radio"]:checked + img,
+.answers input[type="radio"]:checked + span,
+.answers input[type="radio"]:checked {
+  /* This selector is for the input, but you'll also want to style the label when checked. */
+}
+
+.answers input[type="radio"] {
+  accent-color: #c066e0;
+  margin-right: 0.6em;
+  transform: scale(1.2);
+}
+
+/* Use this for visual feedback when an answer is selected */
+.answers input[type="radio"]:checked ~ span,
+.answers input[type="radio"]:checked ~ img {
+  /* This will not work directly, so use the next selector */
+}
+
+.answers input[type="radio"]:checked + span,
+.answers input[type="radio"]:checked + img {
+  /* For visual feedback if image/text is immediately after the input */
+}
+
+/* The best way: style the label of the checked input using :has (supported in modern browsers) */
+.answers label:has(input[type="radio"]:checked) {
+  background: linear-gradient(90deg, #ffe5ecaa 80%, #e0ecff88 100%);
+  box-shadow: 0 2px 12px #e0ecff77;
+  border: 2.5px solid #c066e0;
+  transform: scale(1.035);
 }
 .answers button {
   display: flex;
@@ -30,17 +163,54 @@ body {
   box-shadow: 0 0 8px #b3d4fc;
 }
 .answers img {
-  height: 60px;
+  height: 100px;
   margin-bottom: 0.4em;
   border-radius: 6px;
 }
+
+.submit-quiz-btn {
+  padding: 0.7em 2em;
+  font-size: 1.1em;
+  border: none;
+  border-radius: 25px;
+  background: linear-gradient(90deg, #f857a6, #ff5858);
+  color: white;
+  font-weight: bold;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  cursor: pointer;
+  margin: 1.5em 0 0 0;
+  transition: background 0.3s, transform 0.2s;
+}
+
+.submit-quiz-btn:hover {
+  background: linear-gradient(90deg, #ff5858, #f857a6);
+  transform: scale(1.04);
+}
+
 #result {
   font-size: 1.4em;
   margin-top: 2em;
+  font-family: 'Lobster', Arial, sans-serif;
+  text-align: center;                /* Center text and inline elements */
+  display: flex;
+  flex-direction: column;
+  align-items: center;               /* Center block/inline-block children */
+  justify-content: center;
+  min-height: 300px;                 /* Optional: ensures some vertical space */
+}
+.result-songkran {
+      color: #0080fe;
+    }
+.result-redthread {
+      color: #c30010;
+	}
+#result .team-header {
+  margin-top: 1.2em;
+  text-align: center;
 }
 #result .team-header img {
-  height: 80px;
-  margin: 1em 1em 0 0;
-  border-radius: 8px;
-  border: 1px solid #ccc;
+display: inline-block;
+  height: 500px;
+  margin: 1em 0.5em 0 0.5em;
+  vertical-align: middle;
 }

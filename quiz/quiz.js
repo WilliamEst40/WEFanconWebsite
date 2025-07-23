@@ -67,8 +67,8 @@ const quizQuestions = [
     question: "Which WilliamEst LOL fit do you like the most?",
     answers: [
       { img: "images/LOL4.jpg", team: "S" },
-      { img: "images/LOL2.jpg", team: "S" },
-      { img: "images/LOL3.jpg", team: "R" },
+      { img: "images/LOL2.jpg", team: "R" },
+      { img: "images/LOL3.jpg", team: "S" },
       { img: "images/LOL1.jpg", team: "R" }
     ]
   },
@@ -100,9 +100,14 @@ const teamDescriptions = {
 
 /* Team images */
 const teamImages = {
-  "R": ["images/Red Thread Header.png"],
-  "S": ["images/Songkran Header.png"]
+  "R": ["images/RedThreadHeader.png"],
+  "S": ["images/SongkranHeader.png"]
 };
+
+const teamName = {
+	"R" : "RED THREAD 🌍🎸🦈",
+	"S" : "SONGKRAN 🌊🎸🦈"
+}
 
 // Tiebreaker question (must have answers that assign to A or B)
 const tieBreaker = {
@@ -130,26 +135,26 @@ function renderQuiz() {
     ansDiv.className = "answers";
     q.answers.forEach((ans, ai) => {
       const label = document.createElement('label');
-      label.style.display = "inline-block";
-      label.style.margin = "0.5em";
+      label.style.display = "block";
+      label.style.margin = "0.5em 0";
       const radio = document.createElement('input');
       radio.type = "radio";
       radio.name = `q${qi}`;
       radio.value = ai;
       label.appendChild(radio);
-      if (ans.img) {
-        const img = document.createElement('img');
-        img.src = ans.img;
-        img.alt = ans.text || "Answer image";
-        img.style.height = "60px";
-        img.style.borderRadius = "6px";
-        img.style.display = "block";
-        label.appendChild(img);
-      }
       if (ans.text) {
         const span = document.createElement('span');
         span.textContent = ans.text;
         label.appendChild(span);
+      }
+      if (ans.img) {
+        const img = document.createElement('img');
+        img.src = ans.img;
+        img.alt = ans.text || "Answer image";
+        img.style.height = "200px";
+        img.style.borderRadius = "6px";
+        img.style.display = "block";
+        label.appendChild(img);
       }
       ansDiv.appendChild(label);
     });
@@ -193,6 +198,7 @@ function handleSubmit() {
 }
 
 function renderTieBreaker(prevScores) {
+  document.getElementsByClassName("quiz-intro")[0].style.display = 'none';
   const container = document.getElementById('question-container');
   container.innerHTML = "";
   const qDiv = document.createElement('div');
@@ -206,27 +212,27 @@ function renderTieBreaker(prevScores) {
   ansDiv.className = "answers";
   tieBreaker.answers.forEach((ans, ai) => {
     const label = document.createElement('label');
-    label.style.display = "inline-block";
-    label.style.margin = "0.5em";
+    label.style.display = "block";
+    label.style.margin = "0.5em 0";
     const radio = document.createElement('input');
     radio.type = "radio";
     radio.name = "tiebreaker";
     radio.value = ai;
     label.appendChild(radio);
-    if (ans.img) {
-      const img = document.createElement('img');
-      img.src = ans.img;
-      img.alt = ans.text || "Answer image";
-      img.style.height = "60px";
-      img.style.borderRadius = "6px";
-      img.style.display = "block";
-      label.appendChild(img);
-    }
-    if (ans.text) {
+	if (ans.text) {
       const span = document.createElement('span');
       span.textContent = ans.text;
       label.appendChild(span);
     }
+    if (ans.img) {
+      const img = document.createElement('img');
+      img.src = ans.img;
+      img.alt = ans.text || "Answer image";
+      img.style.height = "250px";
+      img.style.borderRadius = "6px";
+      img.style.display = "block";
+      label.appendChild(img);
+    }    
     ansDiv.appendChild(label);
   });
   qDiv.appendChild(ansDiv);
@@ -250,20 +256,30 @@ function renderTieBreaker(prevScores) {
 }
 
 function showResult(scores) {
-  document.getElementById('question-container').style.display = 'none';
+  document.getElementsByClassName("quiz-intro")[0].style.display = 'none';
+  document.getElementById('quiz').style.display = 'none';
   const resultDiv = document.getElementById('result');
   resultDiv.style.display = '';
   let winner = scores.R > scores.S ? "R" : "S";
   let imagesHTML = teamImages[winner]
-    .map(src => `<img src="${src}" alt="Team ${winner} profile header" style="height:80px;margin:1em 1em 0 0;border-radius:8px;border:1px solid #ccc;">`)
+    .map(src => `<img src="${src}" alt="Team ${winner} profile header" style="height:300px;margin:1em 1em 0 0;border-radius:8px;border:1px solid #ccc;">`)
     .join('');
+  if (winner === "R")
+  {
+	resultDiv.classList.add('result-redthread');
+  }
+  else 
+  { 
+	resultDiv.classList.add('result-songkran'); 
+  }
+		
   resultDiv.innerHTML = `
-    <div>You belong to <b>Team ${winner}</b>!</div>
     <p>${teamDescriptions[winner]}</p>
     <div class="team-header">
       <b>Your Team Header:</b><br>
       ${imagesHTML}
-      <div style="font-size:.95em;margin-top:.5em;">(Right-click and save to use on X as profile header!)</div>
+      <div style="font-size:.95em;margin-top:.5em;">(Right-click and save. Set this as your profile header on X for Fancon!</div>
+	  <p> Change your profile name to include <br>  ${teamName[winner]} </p>
     </div>
   `;
 }
