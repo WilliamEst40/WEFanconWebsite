@@ -4,7 +4,7 @@ body {
   margin: 2em auto;
   
   /* Gradient background */
-  background: linear-gradient(135deg, #ffe5ec 0%, #e0ecff 100%);
+  background: linear-gradient(135deg, #eb9bb0 0%, #75a1e7 100%);
   min-height: 100vh;
 }
 .top-right-icon {
