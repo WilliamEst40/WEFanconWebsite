@@ -105,8 +105,8 @@ const teamImages = {
 };
 
 const teamName = {
-	"R" : "RED THREAD 🌍🎸🦈",
-	"S" : "SONGKRAN 🌊🎸🦈"
+	"R" : "TEAM RED THREAD 🌍🎸🦈",
+	"S" : "TEAM SONGKRAN 🌊🎸🦈"
 }
 
 // Tiebreaker question (must have answers that assign to A or B)
@@ -278,9 +278,13 @@ function showResult(scores) {
     <div class="team-header">
       <b>Your Team Header:</b><br>
       ${imagesHTML}
-      <div style="font-size:.95em;margin-top:.5em;">(Right-click and save. Set this as your profile header on X for Fancon!</div>
-	  <p> Change your profile name to include <br>  ${teamName[winner]} </p>
+      <div style="font-size:.95em;margin-top:.5em;">(Right-click and save. Set this as your profile header on X for Fancon!)</div>
     </div>
+	<p> Change your profile name to include <br>  ${teamName[winner]} </p>
+	<p> Change your profile picture to: </p>
+	<div class="profile">
+		<img src="images/Profile.jpg"/>
+	</div>
   `;
 }
 

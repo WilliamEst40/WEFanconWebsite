@@ -1,5 +1,6 @@
 body {
   font-family: 'Fredoka', Arial, sans-serif;
+  width: 100%;
   max-width: 600px;
   margin: 2em auto;
   padding: 0 20px;  /* Add padding for mobile */
@@ -7,7 +8,7 @@ body {
   
   /* Gradient background */
   background-color: #ffd4e0; /* Lighter fallback color */
-  background-image: linear-gradient(135deg, #ffb5c9 0%, #9ec3ff 100%);
+  background-image: linear-gradient(135deg, #890b13 0%, #495fa2 100%);
   background-attachment: fixed; /* Keep gradient fixed while scrolling */
   min-height: 100vh;
   position: relative;  /* For proper stacking context */
@@ -17,8 +18,8 @@ body {
   position: fixed;
   top: 24px;
   right: 28px;
-  width: 120px;          /* Adjust size as needed */
-  height: 120px;
+  width: 100px;          /* Adjust size as needed */
+  height: 150px;
   z-index: 999;
   opacity: 0.92;
   transition: transform 0.12s;
@@ -31,25 +32,17 @@ body {
 @media (max-width: 600px) {
   .top-right-icon {
     width: 40px;
-    height: 40px;
+    height: 60px;
     top: 8px;
     right: 8px;
-  }
-  
-  .quiz-intro {
-    padding-top: 70px; /* Increase padding on mobile */
-  }
-  
-  .quiz-intro h2 {
-    font-size: 2em; /* Smaller font size on mobile */
   }
 }
 .top-left-icon {
   position: fixed;
   top: 24px;
   left: 28px;
-  width: 130px;          /* Adjust size as needed */
-  height: 130px;
+  width: 100px;          /* Adjust size as needed */
+  height: 150px;
   z-index: 999;
   opacity: 0.92;
   transition: transform 0.12s;
@@ -62,46 +55,9 @@ body {
 @media (max-width: 600px) {
   .top-left-icon {
     width: 40px;
-    height: 40px;
+    height: 60px;
     top: 8px;
     left: 8px;
-  }
-}
-.side-image {
-  position: fixed;
-  top: 50%;
-  transform: translateY(-50%);
-  z-index: -1;  /* Place behind content */
-  opacity: 0.88;
-  pointer-events: none; /* So the images don't block clicks */
-  max-height: 60vh;
-  width: auto;
-}
-
-.left-side-image {
-  left: 0;
-  margin-left: 10px;    /* Adjust spacing from the edge */
-}
-
-.right-side-image {
-  right: 0;
-  margin-right: 10px;   /* Adjust spacing from the edge */
-}
-
-@media (max-width: 900px) {
-  .side-image {
-    display: none; /* Hide on small screens */
-  }
-}
-
-@media (max-width: 768px) {
-  body {
-    max-width: 100%;
-    padding: 0 15px;
-  }
-  
-  .quiz-intro {
-    padding: 0 15px;
   }
 }
 .quiz-intro {
@@ -115,7 +71,7 @@ body {
 }
 .quiz-intro h2 {
   font-family: 'Winky Rough', sans-serif;
-  font-size: 3em;
+  font-size: clamp(1.8rem, 5vw, 3rem);
   color: #ffffff;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
   margin-bottom: 0.5em;
@@ -124,7 +80,7 @@ body {
 }
 .quiz-intro p {
   font-family: 'Winky Rough', sans-serif;
-  color: #000000;
+  color: #ffffff;
   text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
   font-size: 1.5em;
   margin: 0;
@@ -142,7 +98,6 @@ body {
   box-shadow: 0 8px 28px #b3d4fc99;
   transform: translateY(-3px) scale(1.01);
 }
-
 .question {
  font-family: 'Lobster', cursive;
   font-size: 1.5em;
@@ -249,21 +204,29 @@ body {
   flex-direction: column;
   align-items: center;               /* Center block/inline-block children */
   justify-content: center;
-  min-height: 300px;                 /* Optional: ensures some vertical space */
+  min-height: 300px;				/* Optional: ensures some vertical space */
+  overflow-x: hidden;
 }
 .result-songkran {
       color: #0080fe;
     }
 .result-redthread {
-      color: #c30010;
+      color: #c18830;
 	}
 #result .team-header {
   margin-top: 1.2em;
   text-align: center;
 }
 #result .team-header img {
+width: 100%;
+max-width: 500px;
+  height: auto;
+  object-fit: contain;
+  margin: 0.5em auto;
+}
+#result .profile img {
 display: inline-block;
-  height: 500px;
-  margin: 1em 0.5em 0 0.5em;
-  vertical-align: middle;
+max-width: 100%;
+  height: auto;
+  margin: 0.5em auto;
 }
