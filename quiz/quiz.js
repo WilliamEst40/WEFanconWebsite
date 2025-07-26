@@ -283,17 +283,8 @@ function showResult(scores) {
 		
   resultDiv.innerHTML = `
     <p>${teamDescriptions[winner]}</p>
-    <div class="team-header">
-      <b>Your Team Header:</b><br>
-      ${imagesHTML}
-      <div style="font-size:.95em;margin-top:.5em;">(Right-click and save. Set this as your profile header on X for Fancon!)</div>
-    </div>
-	<p> Change your profile name to include <br>  ${teamName[winner]} </p>
-	<p> Change your profile picture to: </p>
-	<div class="profile">
-		<img src="images/Profile.jpg"/>
-	</div>
-  `;
+	  <p> Change your profile name to include <br>  ${teamName[winner]} </p>
+	  <p> Stay tuned for more details </p>`;
 }
 
 window.onload = function() {
