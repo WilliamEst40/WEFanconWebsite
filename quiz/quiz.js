@@ -3,10 +3,10 @@ const quizQuestions = [
   {
     question: "What’s your ideal concert vibe?",
     answers: [
-      { text: "Dancing in the front row, screaming every lyric", team: "S" },
+      { text: "Dancing in the front row, screaming every lyric", team: "R" },
       { text: "Swaying with the crowd, soaking in the atmosphere", team: "S" },
       { text: "Capturing every moment for your fan account", team: "R" },
-      { text: "Watching quietly from the back, feeling every beat", team: "R" }
+      { text: "Watching quietly from the back, feeling every beat", team: "S" }
     ]
   },
   {
@@ -22,8 +22,8 @@ const quizQuestions = [
     question: "What's your Favorite ThamePo OST?",
     answers: [
       { text: "Destined", img: "images/Destined.jpg", team: "R" },
-      { text: "Your Last", img: "images/YourLast.jpg", team: "R" },
-      { text: "5 cm", img: "images/5cm.jpg", team: "S" },
+      { text: "Your Last", img: "images/YourLast.jpg", team: "S" },
+      { text: "5 cm", img: "images/5cm.jpg", team: "R" },
       { text: "Good Time", img: "images/GoodTime.jpg", team: "S" }
     ]
   },
@@ -59,8 +59,8 @@ const quizQuestions = [
     answers: [
       { text: "Bag", img: "images/Bag.jpg", team: "R" },
       { text: "Glasses", img: "images/Glasses.jpg", team: "S" },
-      { text: "Cap", img: "images/Cap.jpg", team: "S" },
-      { text: "Watch", img: "images/Watch.jpg", team: "R" }
+      { text: "Cap", img: "images/Cap.jpg", team: "R" },
+      { text: "Watch", img: "images/Watch.jpg", team: "S" }
     ]
   },
     {
@@ -68,26 +68,26 @@ const quizQuestions = [
     answers: [
       { img: "images/LOL4.jpg", team: "S" },
       { img: "images/LOL2.jpg", team: "R" },
-      { img: "images/LOL3.jpg", team: "S" },
-      { img: "images/LOL1.jpg", team: "R" }
+      { img: "images/LOL3.jpg", team: "R" },
+      { img: "images/LOL1.jpg", team: "S" }
     ]
   },
     {
     question: "If you could spend a day with WilliamEst, you’d:",
     answers: [
-      { text: "🌆 Go on an adventure-packed day exploring the city", team: "S" },
-      { text: "☕ Chill at a café, talking about life and music", team: "R" },
-      { text: "🎮 Stay in and have a cozy game or movie marathon", team: "R" },
-      { text: "🎨 Join them in a creative workshop—writing lyrics, painting, or crafting fan merch", team: "S" }
+      { text: "🌆 Go on an adventure-packed day exploring the city", team: "R" },
+      { text: "☕ Chill at a café, talking about life and music", team: "S" },
+      { text: "🎮 Stay in and have a cozy game or movie marathon", team: "S" },
+      { text: "🎨 Join them in a creative workshop—writing lyrics, painting, or crafting fan merch", team: "R" }
     ]
   },
     {
     question: "Which is your favorite Est brand collaboration?",
     answers: [
-      { text: "BVLGARI", img: "images/Bvlgari.jpg", team: "S" },
-      { text: "MAYBELLINE", img: "images/Maybelline.jpg", team: "S" },
-      { text: "CHRISTIAN LOUBOUTIN", img: "images/CHRISTIAN LOUBOUTIN.jpg", team: "R" },
-      { text: "POLO RALPH LAUREN", img: "images/Polo.jpg", team: "R" }
+      { text: "BVLGARI", img: "images/Bvlgari.jpg", team: "R" },
+      { text: "MAYBELLINE", img: "images/Maybelline.jpg", team: "R" },
+      { text: "CHRISTIAN LOUBOUTIN", img: "images/CHRISTIAN LOUBOUTIN.jpg", team: "S" },
+      { text: "POLO RALPH LAUREN", img: "images/Polo.jpg", team: "S" }
     ]
   },
 ];
@@ -120,6 +120,13 @@ const tieBreaker = {
   ]
 };
 
+function shuffleArray(array) {
+  return array
+    .map(value => ({ value, sort: Math.random() }))
+    .sort((a, b) => a.sort - b.sort)
+    .map(({ value }) => value);
+}
+
 function renderQuiz() {
   const container = document.getElementById('question-container');
   container.innerHTML = "";
@@ -133,14 +140,15 @@ function renderQuiz() {
 
     const ansDiv = document.createElement('div');
     ansDiv.className = "answers";
-    q.answers.forEach((ans, ai) => {
+    const shuffledAnswers = shuffleArray(q.answers);
+	shuffledAnswers.forEach((ans, ai) => {
       const label = document.createElement('label');
       label.style.display = "block";
       label.style.margin = "0.5em 0";
       const radio = document.createElement('input');
       radio.type = "radio";
       radio.name = `q${qi}`;
-      radio.value = ai;
+      radio.value = q.answers.indexOf(ans); // preserve original index for scoring
       label.appendChild(radio);
       if (ans.text) {
         const span = document.createElement('span');
