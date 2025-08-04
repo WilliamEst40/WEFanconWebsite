@@ -289,11 +289,12 @@ function showResult(scores) {
         <div style="font-size:.95em;margin-top:.5em;">(Right-click and save. Set this as your profile header on X for Fancon!)</div>
       </div>
     <p> Change your profile name to include <br>  ${teamName[winner]} </p>
-    <p> Add this twibbon around your profile picture </p>
+    <p> Add this twibbon around your profile picture. <a href="https://www.twibbonize.com/we-magnetic-frame">Visit here.</a></p>
     <div class="profile">
       <img src="images/Ribbon.jpg"/>
     </div>
-	  <i style="font-size: 0.7em;"> Twibbon credit: @lattesipper on X</i>
+	  <i style="font-size: 0.7em;"> Twibbon credit: @lattesipper </i>
+    <
     `;
 }
 
