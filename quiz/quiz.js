@@ -294,7 +294,6 @@ function showResult(scores) {
       <img src="images/Ribbon.jpg"/>
     </div>
 	  <i style="font-size: 0.7em;"> Twibbon credit: @lattesipper </i>
-    <
     `;
 }
 
