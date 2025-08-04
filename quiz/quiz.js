@@ -283,8 +283,18 @@ function showResult(scores) {
 		
   resultDiv.innerHTML = `
     <p>${teamDescriptions[winner]}</p>
-	  <p> Change your profile name to include <br>  ${teamName[winner]} </p>
-	  <p> Stay tuned for more details </p>`;
+    <div class="team-header">
+        <b>Your Team Header:</b><br>
+        ${imagesHTML}
+        <div style="font-size:.95em;margin-top:.5em;">(Right-click and save. Set this as your profile header on X for Fancon!)</div>
+      </div>
+    <p> Change your profile name to include <br>  ${teamName[winner]} </p>
+    <p> Add this twibbon around your profile picture </p>
+    <div class="profile">
+      <img src="images/Ribbon.jpg"/>
+    </div>
+	  <i style="font-size: 0.7em;"> Twibbon credit: @lattesipper on X</i>
+    `;
 }
 
 window.onload = function() {
